@@ -32,15 +32,11 @@ public class Machine {
 	}
 	
 	public String cal(String s){
-		if(Pattern.matches("[-]?[0-9]*\\.?[0-9]+", s)){
-			System.out.println(Pattern.matches("[-]?[0-9]*\\.?[0-9]+", s));
-			return s;
-		}
 		s = calParentheses(s);
 		s = calFunction(s);
 		s = calTimesDevide(s);
 		s = calPlusMinus(s);
-		return cal(s);
+		return s;
 	}
 	
 	public String calParentheses(String s){
@@ -58,54 +54,53 @@ public class Machine {
 	}
 	
 	public String calTimesDevide(String s){
-		Pattern pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+\\*[-]?[0-9]*\\.?[0-9]+");
+		Pattern pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+[\\*\\/][-]?[0-9]*\\.?[0-9]+");
 		Matcher matcher = pattern.matcher(s);
+		double answer = 0;
 		while(matcher.find()){
 			System.out.println(matcher.group());
 			String[] temp = matcher.group().split("\\*");
-			double answer = Double.parseDouble(temp[0]) * Double.parseDouble(temp[1]);
-			s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\*[-]?[0-9]*\\.?[0-9]+",""+answer);
-		}
-		pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+\\/[-]?[0-9]*\\.?[0-9]+");
-		matcher = pattern.matcher(s);
-		while(matcher.find()){
-			System.out.println(matcher.group());
-			String[] temp = matcher.group().split("\\/");
-			double answer = Double.parseDouble(temp[0]) / Double.parseDouble(temp[1]);
-			s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\/[-]?[0-9]*\\.?[0-9]+",""+answer);
+			if(temp.length == 2){
+				answer = Double.parseDouble(temp[0]) * Double.parseDouble(temp[1]);
+				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\*[-]?[0-9]*\\.?[0-9]+",""+answer);
+			}else{
+				temp = matcher.group().split("\\/");
+				answer = Double.parseDouble(temp[0]) / Double.parseDouble(temp[1]);
+				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\/[-]?[0-9]*\\.?[0-9]+",""+answer);
+			}
+			matcher = pattern.matcher(s);
 		}
 		return s;
 	}
 	
 	public String calPlusMinus(String s){
-		Pattern pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+");
+		Pattern pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+[\\+\\-][-]?[0-9]*\\.?[0-9]+");
 		Matcher matcher = pattern.matcher(s);
+		double answer = 0;
 		while(matcher.find()){
 			System.out.println(matcher.group());
 			String[] temp = matcher.group().split("\\+");
-			double answer = Double.parseDouble(temp[0]) + Double.parseDouble(temp[1]);
-			if(answer*Double.parseDouble(temp[0])<0)
-				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+","+"+answer);
-			else
-				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+",""+answer);
-		}
-		pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+\\-[-]?[0-9]*\\.?[0-9]+");
-		matcher = pattern.matcher(s);
-		while(matcher.find()){
-			System.out.println(matcher.group());
-			String[] temp = matcher.group().split("\\-");
-			double answer = 0;
 			if(temp.length ==2){
-				answer = Double.parseDouble(temp[0]) - Double.parseDouble(temp[1]);
-			}else if(temp.length ==4){
-				answer = -1*Double.parseDouble(temp[1]) - -1*Double.parseDouble(temp[3]);
-			}else{
-				if(temp[0].equals(""))
-					answer = -1*Double.parseDouble(temp[1]) - Double.parseDouble(temp[2]);
+				answer = Double.parseDouble(temp[0]) + Double.parseDouble(temp[1]);
+				if(answer*Double.parseDouble(temp[0])<0)
+					s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+","+"+answer);
 				else
-					answer = Double.parseDouble(temp[0]) - -1*Double.parseDouble(temp[2]);
+					s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+",""+answer);
+			}else{
+				temp = matcher.group().split("\\-");
+				if(temp.length ==2){
+					answer = Double.parseDouble(temp[0]) - Double.parseDouble(temp[1]);
+				}else if(temp.length ==4){
+					answer = -1*Double.parseDouble(temp[1]) - -1*Double.parseDouble(temp[3]);
+				}else{
+					if(temp[0].equals(""))
+						answer = -1*Double.parseDouble(temp[1]) - Double.parseDouble(temp[2]);
+					else
+						answer = Double.parseDouble(temp[0]) - -1*Double.parseDouble(temp[2]);
+				}
+				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\-[-]?[0-9]*\\.?[0-9]+",""+answer);
 			}
-			s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\-[-]?[0-9]*\\.?[0-9]+",""+answer);
+			matcher = pattern.matcher(s);
 		}
 		return s;
 	}
