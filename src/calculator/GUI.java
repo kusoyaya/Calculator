@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class GUI extends JFrame {
 
@@ -53,12 +55,16 @@ public class GUI extends JFrame {
 		display.setLayout(new BoxLayout(display, BoxLayout.Y_AXIS));
 		
 		textField = new JTextField();
+		textField.setFont(new Font("Lucida Grande", Font.ITALIC, 15));
+		textField.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField.setEditable(false);
 		display.add(textField);
 		textField.setColumns(30);
 		textField.setText(a.getUser());
 		
 		displayField = new JTextField();
+		displayField.setHorizontalAlignment(SwingConstants.RIGHT);
+		displayField.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		displayField.setEditable(false);
 		display.add(displayField);
 		displayField.setColumns(30);

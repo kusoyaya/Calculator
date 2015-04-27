@@ -32,11 +32,15 @@ public class Machine {
 	}
 	
 	public String cal(String s){
+		if(Pattern.matches("[-]?[0-9]*\\.?[0-9]+", s)){
+			System.out.println(Pattern.matches("[-]?[0-9]*\\.?[0-9]+", s));
+			return s;
+		}
 		s = calParentheses(s);
 		s = calFunction(s);
 		s = calTimesDevide(s);
 		s = calPlusMinus(s);
-		return s;
+		return cal(s);
 	}
 	
 	public String calParentheses(String s){
@@ -80,7 +84,10 @@ public class Machine {
 			System.out.println(matcher.group());
 			String[] temp = matcher.group().split("\\+");
 			double answer = Double.parseDouble(temp[0]) + Double.parseDouble(temp[1]);
-			s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+",""+answer);
+			if(answer*Double.parseDouble(temp[0])<0)
+				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+","+"+answer);
+			else
+				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+",""+answer);
 		}
 		pattern = Pattern.compile("[-]?[0-9]*\\.?[0-9]+\\-[-]?[0-9]*\\.?[0-9]+");
 		matcher = pattern.matcher(s);
