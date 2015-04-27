@@ -43,7 +43,8 @@ public class Machine {
 		Pattern pattern = Pattern.compile("\\((.*?)\\)");
 		Matcher matcher = pattern.matcher(s);
 		while(matcher.find()){
-			s = matcher.replaceFirst(cal(matcher.group(1)));	
+			s = matcher.replaceFirst(cal(matcher.group(1)));
+			matcher.reset(s);
 		}
 		return s;
 	}
