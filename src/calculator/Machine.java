@@ -43,7 +43,7 @@ public class Machine {
 		Pattern pattern = Pattern.compile("\\((.*?)\\)");
 		Matcher matcher = pattern.matcher(s);
 		while(matcher.find()){
-			s = s.replaceFirst("\\(.*?\\)", cal(matcher.group(1)));	
+			s = matcher.replaceFirst(cal(matcher.group(1)));	
 		}
 		return s;
 	}
@@ -62,13 +62,13 @@ public class Machine {
 			String[] temp = matcher.group().split("\\*");
 			if(temp.length == 2){
 				answer = Double.parseDouble(temp[0]) * Double.parseDouble(temp[1]);
-				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\*[-]?[0-9]*\\.?[0-9]+",""+answer);
+				s = matcher.replaceFirst(""+answer);
 			}else{
 				temp = matcher.group().split("\\/");
 				answer = Double.parseDouble(temp[0]) / Double.parseDouble(temp[1]);
-				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\/[-]?[0-9]*\\.?[0-9]+",""+answer);
+				s = matcher.replaceFirst(""+answer);
 			}
-			matcher = pattern.matcher(s);
+			matcher.reset(s);
 		}
 		return s;
 	}
@@ -83,9 +83,9 @@ public class Machine {
 			if(temp.length ==2){
 				answer = Double.parseDouble(temp[0]) + Double.parseDouble(temp[1]);
 				if(answer*Double.parseDouble(temp[0])<0)
-					s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+","+"+answer);
+					s = matcher.replaceFirst("+"+answer);
 				else
-					s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\+[-]?[0-9]*\\.?[0-9]+",""+answer);
+					s = matcher.replaceFirst(""+answer);
 			}else{
 				temp = matcher.group().split("\\-");
 				if(temp.length ==2){
@@ -98,9 +98,9 @@ public class Machine {
 					else
 						answer = Double.parseDouble(temp[0]) - -1*Double.parseDouble(temp[2]);
 				}
-				s = s.replaceFirst("[-]?[0-9]*\\.?[0-9]+\\-[-]?[0-9]*\\.?[0-9]+",""+answer);
+				s = matcher.replaceFirst(""+answer);;
 			}
-			matcher = pattern.matcher(s);
+			matcher.reset(s);
 		}
 		return s;
 	}
