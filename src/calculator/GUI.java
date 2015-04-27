@@ -19,7 +19,7 @@ public class GUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField displayField;
-	private JTextField textField;
+	private JTextField secondDisplay;
 
 	/**
 	 * Launch the application.
@@ -54,13 +54,13 @@ public class GUI extends JFrame {
 		contentPane.add(display, BorderLayout.NORTH);
 		display.setLayout(new BoxLayout(display, BoxLayout.Y_AXIS));
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Lucida Grande", Font.ITALIC, 15));
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setEditable(false);
-		display.add(textField);
-		textField.setColumns(30);
-		textField.setText(a.getUser());
+		secondDisplay = new JTextField();
+		secondDisplay.setFont(new Font("Lucida Grande", Font.ITALIC, 15));
+		secondDisplay.setHorizontalAlignment(SwingConstants.RIGHT);
+		secondDisplay.setEditable(false);
+		display.add(secondDisplay);
+		secondDisplay.setColumns(30);
+		secondDisplay.setText(a.getUser());
 		
 		displayField = new JTextField();
 		displayField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -80,11 +80,31 @@ public class GUI extends JFrame {
 		JButton btnNewButton_1 = new JButton("New button");
 		button.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		button.add(btnNewButton_2);
+		JButton leftParenthesis = new JButton("(");
+		leftParenthesis.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(a.isOperatorClicked){
+					a.appendUser("(");
+					a.isLeftParenthesisClicked += 1;
+					secondDisplay.setText(secondDisplay.getText()+"(");
+				}
+			}
+		});
+		button.add(leftParenthesis );
 		
-		JButton btnNewButton_3 = new JButton("New button");
-		button.add(btnNewButton_3);
+		JButton rightParenthesis  = new JButton(")");
+		rightParenthesis.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(a.isLeftParenthesisClicked > 0){
+					a.appendUser(")");
+					a.isLeftParenthesisClicked -= 1;
+					secondDisplay.setText(a.getUser());
+				}
+			}
+		});
+		button.add(rightParenthesis );
 		
 		JButton ac = new JButton("AC");
 		ac.addMouseListener(new MouseAdapter() {
@@ -92,7 +112,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				a.clean();
 				displayField.setText("0");
-				textField.setText("");
+				secondDisplay.setText("");
 			}
 		});
 		button.add(ac);
@@ -142,10 +162,11 @@ public class GUI extends JFrame {
 		JButton plus = new JButton("+");
 		plus.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {displayField.setText(a.getAnswer());
-			a.appendUser("+");
-			textField.setText(a.getUser());
-			a.isOperatorClicked = true;
+			public void mouseClicked(MouseEvent e) {
+				displayField.setText(a.getAnswer());
+				a.appendUser("+");
+				secondDisplay.setText(a.getUser());
+				a.isOperatorClicked = true;
 			}
 		});
 		button.add(plus);
@@ -201,7 +222,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				displayField.setText(a.getAnswer());
 				a.appendUser("-");
-				textField.setText(a.getUser());
+				secondDisplay.setText(a.getUser());
 				a.isOperatorClicked = true;
 			}
 		});
@@ -258,7 +279,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				displayField.setText(a.getAnswer());
 				a.appendUser("*");
-				textField.setText(a.getUser());
+				secondDisplay.setText(a.getUser());
 				a.isOperatorClicked = true;
 			}
 		});
@@ -296,7 +317,7 @@ public class GUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				displayField.setText(a.getAnswer());
-				textField.setText(a.getUser());
+				secondDisplay.setText(a.getUser());
 			}
 		});
 		button.add(equal);
@@ -307,7 +328,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				displayField.setText(a.getAnswer());
 				a.appendUser("/");
-				textField.setText(a.getUser());
+				secondDisplay.setText(a.getUser());
 				a.isOperatorClicked = true;
 			}
 		});

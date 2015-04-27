@@ -6,6 +6,7 @@ public class Machine {
 	private String user = "";
 	private String answer = "0";
 	boolean isOperatorClicked = true;
+	int isLeftParenthesisClicked = 0;
 	
 	
 	public void appendUser(String appendment){
@@ -29,9 +30,13 @@ public class Machine {
 		user = "";
 		answer = "0";
 		isOperatorClicked=true;
+		isLeftParenthesisClicked = 0;
 	}
 	
 	public String cal(String s){
+		for(int i = 0;i<isLeftParenthesisClicked;i++){
+			s+=")";
+		}
 		s = calParentheses(s);
 		s = calFunction(s);
 		s = calTimesDevide(s);
