@@ -77,8 +77,6 @@ public class GUI extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		button.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		button.add(btnNewButton_1);
 		
 		JButton leftParenthesis = new JButton("(");
 		leftParenthesis.addMouseListener(new MouseAdapter() {
@@ -105,6 +103,17 @@ public class GUI extends JFrame {
 			}
 		});
 		button.add(rightParenthesis );
+		
+		JButton delete = new JButton("DEL");
+		delete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				a.removeLastChar();
+				displayField.setText(displayField.getText().substring(0,displayField.getText().length()-1));
+			}
+		});
+		button.add(delete);
+		
 		
 		JButton ac = new JButton("AC");
 		ac.addMouseListener(new MouseAdapter() {
@@ -171,8 +180,16 @@ public class GUI extends JFrame {
 		});
 		button.add(plus);
 		
-		JButton btnNewButton_9 = new JButton("New button");
-		button.add(btnNewButton_9);
+		JButton sin = new JButton("sin");
+		sin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				a.appendUser("SIN(1/180*"+Math.PI+"*");
+				a.isLeftParenthesisClicked++;
+				secondDisplay.setText(a.getUser());
+			}
+		});
+		button.add(sin);
 		
 		JButton four = new JButton("4");
 		four.addMouseListener(new MouseAdapter() {
@@ -228,8 +245,16 @@ public class GUI extends JFrame {
 		});
 		button.add(minus);
 		
-		JButton btnNewButton_14 = new JButton("New button");
-		button.add(btnNewButton_14);
+		JButton cos = new JButton("cos");
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				a.appendUser("COS(1/180*"+Math.PI+"*");
+				a.isLeftParenthesisClicked++;
+				secondDisplay.setText(a.getUser());
+			}
+		});
+		button.add(cos);
 		
 		JButton one = new JButton("1");
 		one.addMouseListener(new MouseAdapter() {
@@ -285,8 +310,16 @@ public class GUI extends JFrame {
 		});
 		button.add(times);
 		
-		JButton btnNewButton_19 = new JButton("New button");
-		button.add(btnNewButton_19);
+		JButton tan = new JButton("tan");
+		tan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				a.appendUser("TAN(1/180*"+Math.PI+"*");
+				a.isLeftParenthesisClicked++;
+				secondDisplay.setText(a.getUser());
+			}
+		});
+		button.add(tan);
 		
 		JButton zero = new JButton("0");
 		zero.addMouseListener(new MouseAdapter() {

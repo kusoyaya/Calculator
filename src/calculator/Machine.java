@@ -33,12 +33,29 @@ public class Machine {
 		isLeftParenthesisClicked = 0;
 	}
 	
+	public void removeLastChar(){
+		user = user.substring(0, user.length()-1);
+	}
+	
+	public String popLastNumber(boolean popOrNot){
+		String last = "";
+		Pattern p = Pattern.compile("-?[0-9]*\\.?[0-9]+");
+		Matcher m = p.matcher(user);
+		while(m.find()){
+			last = m.group(m.groupCount());
+		}
+		if(popOrNot)
+			user=user.replaceAll(last,"");
+		
+		return last;
+	}//pop or not pop accroding to parameter
+	
 	public String cal(String s){
 		for(int i = 0;i<isLeftParenthesisClicked;i++){
 			s+=")";
 		}
-		s = calParentheses(s);
 		s = calFunction(s);
+		s = calParentheses(s);
 		s = calTimesDevide(s);
 		s = calPlusMinus(s);
 		return s;
@@ -55,7 +72,30 @@ public class Machine {
 	}
 	
 	public String calFunction(String s){
-		
+		Pattern pattern = Pattern.compile("SIN\\(.*?\\)");
+		Matcher matcher = pattern.matcher(s);
+		while(matcher.find()){
+			String temp = matcher.group().replaceAll("SIN\\(|\\)","");
+			double answer = Math.sin(Double.parseDouble(cal(temp)));
+			s = matcher.replaceFirst(""+answer);
+			matcher.reset(s);
+		}
+		pattern = Pattern.compile("COS\\(.*?\\)");
+		matcher = pattern.matcher(s);
+		while(matcher.find()){
+			String temp = matcher.group().replaceAll("COS\\(|\\)","");
+			double answer = Math.cos(Double.parseDouble(cal(temp)));
+			s = matcher.replaceFirst(""+answer);
+			matcher.reset(s);
+		}
+		pattern = Pattern.compile("TAN\\(.*?\\)");
+		matcher = pattern.matcher(s);
+		while(matcher.find()){
+			String temp = matcher.group().replaceAll("TAN\\(|\\)","");
+			double answer = Math.tan(Double.parseDouble(cal(temp)));
+			s = matcher.replaceFirst(""+answer);
+			matcher.reset(s);
+		}
 		return s;
 	}
 	
