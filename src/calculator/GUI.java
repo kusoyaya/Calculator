@@ -72,7 +72,7 @@ public class GUI extends JFrame {
 		
 		JPanel button = new JPanel();
 		contentPane.add(button, BorderLayout.CENTER);
-		button.setLayout(new GridLayout(5, 5, 0, 0));
+		button.setLayout(new GridLayout(5, 7, 0, 0));
 		
 		JButton btnNewButton = new JButton("New button");
 		button.add(btnNewButton);
@@ -184,7 +184,9 @@ public class GUI extends JFrame {
 		sin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				a.appendUser("SIN(1/180*"+Math.PI+"*");
+				if(a.isOperatorClicked)
+					a.appendUser("1");
+				a.appendUser("*SIN(1/180*"+Math.PI+"*");
 				a.isLeftParenthesisClicked++;
 				secondDisplay.setText(a.getUser());
 			}
@@ -249,7 +251,9 @@ public class GUI extends JFrame {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				a.appendUser("COS(1/180*"+Math.PI+"*");
+				if(a.isOperatorClicked)
+					a.appendUser("1");
+				a.appendUser("*COS(1/180*"+Math.PI+"*");
 				a.isLeftParenthesisClicked++;
 				secondDisplay.setText(a.getUser());
 			}
@@ -314,7 +318,9 @@ public class GUI extends JFrame {
 		tan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				a.appendUser("TAN(1/180*"+Math.PI+"*");
+				if(a.isOperatorClicked)
+					a.appendUser("1");
+				a.appendUser("*TAN(1/180*"+Math.PI+"*");
 				a.isLeftParenthesisClicked++;
 				secondDisplay.setText(a.getUser());
 			}
